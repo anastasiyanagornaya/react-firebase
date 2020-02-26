@@ -1,8 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import withFirebaseAuth from "react-with-firebase-auth";
+import * as firebase from "firebase/app";
+import "firebase/auth";
+import firebaseConfig from "./config/firebaseReact";
 
-function App() {
+import React from "react";
+import logo from "./logo.svg";
+import "./App.css";
+
+const firebaseApp = firebase.initializeApp(firebaseConfig);
+const firebaseAppAuth = firebaseApp.auth();
+const providers = {
+  googleProvider: new firebase.auth.GoogleAuthProvider()
+};
+
+const App = ({ user, signOut, signInWithGoogle }) => {
   return (
     <div className="App">
       <header className="App-header">
@@ -21,6 +32,9 @@ function App() {
       </header>
     </div>
   );
-}
+};
 
-export default App;
+export default withFirebaseAuth({
+  providers,
+  firebaseAppAuth
+})(App);
