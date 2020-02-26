@@ -1,0 +1,15 @@
+.register-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 30px;
+  background-color: rgb(234, 236, 227);
+  width: 20%;
+  border-radius: 1.5%;
+  margin: 50px auto;
+}
+
+.btn-submit {
+  display: flex;
+  justify-content: space-between;
+}
