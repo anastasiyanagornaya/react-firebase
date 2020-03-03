@@ -1,12 +1,11 @@
-const config = {
-  apiKey: "AIzaSyCxVa2QM_agilr3jY2QuUeTtdRGX7ZKNaQ",
-  authDomain: "react-firebase-a3b1b.firebaseapp.com",
-  databaseURL: "https://react-firebase-a3b1b.firebaseio.com",
-  projectId: "react-firebase-a3b1b",
-  storageBucket: "react-firebase-a3b1b.appspot.com",
-  messagingSenderId: "615009937946",
-  appId: "1:615009937946:web:d20938d96b1d28ced0ffa3",
-  measurementId: "G-VH4F9NGD25"
+const сonfig = {
+  apiKey: "AIzaSyAqHHr0Fe-rrdXC3z0AsP0rLkK_TFsRA6o",
+  authDomain: "znr-nagornaya.firebaseapp.com",
+  databaseURL: "https://znr-nagornaya.firebaseio.com",
+  projectId: "znr-nagornaya",
+  storageBucket: "znr-nagornaya.appspot.com",
+  messagingSenderId: "1068063681468",
+  appId: "1:1068063681468:web:4825dcafbef5b7a80059b9"
 };
 
-export default config;
+export default сonfig;
