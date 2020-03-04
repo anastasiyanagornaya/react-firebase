@@ -10,8 +10,10 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import MailIcon from "@material-ui/icons/Mail";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import { app } from "firebase";
+//import { app } from "firebase";
 import firebase from "firebase";
+//import { store } from "../../store/configureStore";
+import { useDispatch } from "react-redux";
 
 const drawerWidth = 240;
 
@@ -48,6 +50,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function ResponsiveDrawer(props) {
+  const dispatch = useDispatch();
+
   const { container } = props;
   const classes = useStyles();
   const theme = useTheme();
@@ -67,7 +71,11 @@ export default function ResponsiveDrawer(props) {
       <List>
         {["MyProfile", "Flights", "Passengers", "Companies"].map(
           (text, index) => (
-            <ListItem button key={text}>
+            <ListItem
+              button
+              key={text}
+              onClick={() => dispatch({ type: "FETCH_SHOW_USER" })}
+            >
               <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
               </ListItemIcon>
