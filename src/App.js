@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import withFirebaseAuth from "react-with-firebase-auth";
 import * as firebase from "firebase/app";
 import "firebase/auth";
@@ -8,10 +8,11 @@ import firebaseConfig from "./config/firebaseReact";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Register from "./pages/Register/Register";
 import Login from "./pages/Login/Login";
-import PageIsNotFound from "./pages/404/404";
 import Header from "./components/Header/Header";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import PublicRoute from "./components/PublicRoute/PublicRoute";
+import ResponsiveDrawer from "./components/Navbar/Navbar";
+import PageIsNotFound from "./pages/404/404";
 
 import "./App.css";
 
@@ -21,18 +22,16 @@ const providers = {
   googleProvider: new firebase.auth.GoogleAuthProvider()
 };
 
-const App = ({ user, signOut, signInWithGoogle }) => {
+const App = props => {
+  console.log("prop", props);
+  const { user, signOut, signInWithGoogle } = props;
   return (
     <React.Fragment>
       <Header user={user} signOut={signOut} />
+      {user && <ResponsiveDrawer />}
       <BrowserRouter>
         <Switch>
-          <PrivateRoute
-            path="/dashboard"
-            component={Dashboard}
-            user={user}
-            exact
-          />
+          <PrivateRoute path="/" component={Dashboard} user={user} exact />
           <PublicRoute
             path="/register"
             component={Register}

@@ -4,7 +4,6 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import IconButton from "@material-ui/core/IconButton";
-import MoreIcon from "@material-ui/icons/MoreVert";
 import Button from "@material-ui/core/Button";
 
 import "./Header.css";
@@ -21,7 +20,9 @@ const Header = ({ user, signOut }) => {
         >
           <AccountCircle />
         </IconButton>
-        <Button onClick={signOut}>Log Out</Button>
+        <Button style={{ color: "#fff" }} onClick={signOut}>
+          Log Out
+        </Button>
       </>
     ) : (
       <>

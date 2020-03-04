@@ -6,7 +6,7 @@ const PublicRoute = ({ component: Component, user, ...rest }) => {
     <Route
       {...rest}
       render={props =>
-        user ? <Redirect to="/dashboard" /> : <Component {...props} {...rest} />
+        user ? <Redirect to="/" /> : <Component {...props} {...rest} />
       }
     />
   );
