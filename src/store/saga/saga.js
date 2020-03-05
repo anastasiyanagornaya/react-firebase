@@ -12,8 +12,7 @@ export function* getUser() {
       users.push({ docId: user.id, ...user.data() });
     });
 
-    console.log("users", users);
-    // yield put(actionCreators.getUserSuccess(users));
+    yield put(actionCreators.getUserSuccess(users));
   } catch (error) {
     console.log("getUser error: ", error);
   }

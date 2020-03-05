@@ -1,12 +1,12 @@
 const initialState = {
-  user: { first_name: "name", last_name: "name" },
-  isFormShow: true
+  users: [],
+  isFormShow: false
 };
 
 export function reducer(state = initialState, action) {
   switch (action.type) {
     case "GET_USER_SUCCESS":
-      return { user: action.payload, isFormShow: true };
+      return { users: action.payload, isFormShow: true };
     case "UPDATE_USER_SUCCESS":
       return (state = action.payload);
     default:

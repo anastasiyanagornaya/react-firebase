@@ -5,6 +5,8 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 
+import UsersList from "../../components/UsersList/UsersList.js";
+
 import "./Dashboard.css";
 
 const useStyles = makeStyles(theme => ({
@@ -16,10 +18,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Dashboard = props => {
-  const { first_name, last_name } = props.user.user;
-  const { isFormShow } = props.user;
-  console.log("user", props.user);
+const Dashboard = ({ users, isFormShow }) => {
+  console.log("users Dashboard", users);
   const [reduct, setReduct] = useState(false);
   const [{ name, surname }, setName] = useState({});
 
@@ -49,13 +49,16 @@ const Dashboard = props => {
   };
 
   const classes = useStyles();
+
+  if (!isFormShow) return <div>Press My Profile button</div>;
   return (
     isFormShow && (
       <div className="dashboard">
+        {users.length && <UsersList users={users} />}
         {reduct ? (
           <div className="dashboard-form">
             <div className={classes.root}>
-              <TextField
+              {/* <TextField
                 id="outlined-password-input"
                 label="first name"
                 name="name"
@@ -75,7 +78,7 @@ const Dashboard = props => {
                 fullWidth={true}
                 onChange={handleChange}
                 defaultValue={last_name}
-              />
+              /> */}
             </div>
             <div className={classes.root}>
               <Button
@@ -99,10 +102,10 @@ const Dashboard = props => {
           </div>
         ) : (
           <div className="dashboard-form">
-            <span>{first_name}</span>
-            <span>{last_name}</span>
+            {/* <span>{first_name}</span>
+            <span>{last_name}</span> */}
             <Button variant="contained" color="primary" onClick={handleReduct}>
-              edit
+              update
             </Button>
           </div>
         )}
@@ -111,10 +114,9 @@ const Dashboard = props => {
   );
 };
 
-const mapStateToProps = store => {
-  return {
-    user: store
-  };
-};
+const mapStateToProps = store => ({
+  users: store.users,
+  isFormShow: store.isFormShow
+});
 
 export default connect(mapStateToProps)(Dashboard);
