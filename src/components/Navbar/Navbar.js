@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
@@ -55,7 +55,7 @@ export default function ResponsiveDrawer(props) {
   const { container } = props;
   const classes = useStyles();
   const theme = useTheme();
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -63,6 +63,11 @@ export default function ResponsiveDrawer(props) {
 
   const users = firebase.database.collection;
   console.log(users);
+
+  useEffect(() => {
+    // Обновляем заголовок документа с помощью API браузера
+    console.log('ResponsiveDrawer clicked')
+  });
 
   const drawer = (
     <div>
@@ -72,9 +77,11 @@ export default function ResponsiveDrawer(props) {
         {["MyProfile", "Flights", "Passengers", "Companies"].map(
           (text, index) => (
             <ListItem
-              button
+              button={true}
               key={text}
-              onClick={text === "MyPrifile" ? dispatch(getUser()) : undefined}
+              // onClick={ ? () => dispatch(getUser()) : undefined}
+              // onClick={text === "MyPrifile" ? () => console.log('clicked') : undefined}
+              onClick={() => dispatch(getUser())}
             >
               <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}

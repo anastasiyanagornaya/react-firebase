@@ -2,8 +2,7 @@ import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import withFirebaseAuth from "react-with-firebase-auth";
 import * as firebase from "firebase/app";
-import "firebase/auth";
-import firebaseConfig from "./config/firebaseReact";
+import { firebaseApp } from './config/firebase-init';
 
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Register from "./pages/Register/Register";
@@ -19,32 +18,31 @@ import { store } from "./store/configureStore";
 
 import "./App.css";
 
-const firebaseApp = firebase.initializeApp(firebaseConfig);
 const firebaseAppAuth = firebaseApp.auth();
 const providers = {
   googleProvider: new firebase.auth.GoogleAuthProvider()
 };
  //??????
-firebase
-  .firestore()
-  .enablePersistence()
-  .then(function() {
-    // Initialize Cloud Firestore through firebase
-    const db = firebase.firestore();
-  })
-  .catch(function(err) {
-    if (err.code === "failed-precondition") {
-      // Multiple tabs open, persistence can only be enabled in one tab at a a time.
-    } else if (err.code === "unimplemented") {
-      // The current browser does not support all of the
-      // features required to enable persistence
-      // ...
-    }
-  });
-const db = firebase.firestore();
-console.log(db);
-db.collection("users")
-  .get()
+// firebase
+//   .firestore()
+//   .enablePersistence()
+//   .then(function() {
+//     // Initialize Cloud Firestore through firebase
+//     const db = firebase.firestore();
+//   })
+//   .catch(function(err) {
+//     if (err.code === "failed-precondition") {
+//       // Multiple tabs open, persistence can only be enabled in one tab at a a time.
+//     } else if (err.code === "unimplemented") {
+//       // The current browser does not support all of the
+//       // features required to enable persistence
+//       // ...
+//     }
+//   });
+// export const db = firebase.firestore();
+// console.log('Database', db);
+// db.collection("users")
+//   .get()
   // .then(querySnapshot => {
   //   querySnapshot.forEach(doc => {
   //     console.log(doc.data());
@@ -55,8 +53,8 @@ db.collection("users")
       // recent_title.innerText = users.recent_title;
       // recent_desc.innerText = users.recent_desc;
       // recent_rsvp_url.href = users.recent_rsvp_url;
-    });
-  });
+  //   });
+  // });
 
 const App = props => {
   console.log("prop", props);
