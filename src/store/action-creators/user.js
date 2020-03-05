@@ -4,8 +4,9 @@ export const getUser = () => ({
   type: actions.GET_USER
 });
 
-export const getUserSuccess = () => ({
-  type: actions.GET_USER_SUCCESS
+export const getUserSuccess = (payload) => ({
+  type: actions.GET_USER_SUCCESS,
+  payload
 });
 
 export const updateUser = payload => ({

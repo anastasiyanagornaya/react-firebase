@@ -12,11 +12,10 @@ export function* getUser() {
         users.push({docId: user.id, ...user.data()});
     });
   
-    console.log('users', users)
-  } catch (error) {
+  yield put(actionCreators.getUserSuccess(users));
+} catch (error) {
     console.log('getUser error: ', error)
   }
-  // yield put(actionCreators.getUserSuccess);
 }
 
 function* updateUser(id, data) {
