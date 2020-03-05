@@ -3,7 +3,6 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import withFirebaseAuth from "react-with-firebase-auth";
 import * as firebase from "firebase/app";
 import { firebaseApp } from "./config/firebase-init";
-
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Register from "./pages/Register/Register";
 import Login from "./pages/Login/Login";

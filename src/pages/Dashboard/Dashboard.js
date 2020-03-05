@@ -26,7 +26,8 @@ const Dashboard = props => {
   const dispatch = useDispatch();
 
   const handleReduct = () => {
-    setReduct(true);
+    // setReduct(true);
+    dispatch(updateUser());
   };
 
   const handleCancel = () => {

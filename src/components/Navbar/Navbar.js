@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from "react";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Divider from "@material-ui/core/Divider";
+import clsx from "clsx";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
-import Hidden from "@material-ui/core/Hidden";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
+import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
+import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
-import firebase from "firebase";
 import { useDispatch } from "react-redux";
 import { getUser } from "../../store/action-creators/user";
 
@@ -20,126 +26,145 @@ const useStyles = makeStyles(theme => ({
   root: {
     display: "flex"
   },
-  drawer: {
-    [theme.breakpoints.up("sm")]: {
-      width: drawerWidth,
-      flexShrink: 0
-    }
-  },
   appBar: {
-    [theme.breakpoints.up("sm")]: {
-      width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth
-    }
+    transition: theme.transitions.create(["margin", "width"], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen
+    })
+  },
+  appBarShift: {
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: drawerWidth,
+    transition: theme.transitions.create(["margin", "width"], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen
+    })
   },
   menuButton: {
-    marginRight: theme.spacing(2),
-    [theme.breakpoints.up("sm")]: {
-      display: "none"
-    }
+    marginRight: theme.spacing(2)
   },
-  toolbar: theme.mixins.toolbar,
+  hide: {
+    display: "none"
+  },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0
+  },
   drawerPaper: {
     width: drawerWidth
   },
+  drawerHeader: {
+    display: "flex",
+    alignItems: "center",
+    padding: theme.spacing(0, 1),
+    ...theme.mixins.toolbar,
+    justifyContent: "flex-end"
+  },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3)
+    padding: theme.spacing(3),
+    transition: theme.transitions.create("margin", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen
+    }),
+    marginLeft: -drawerWidth
+  },
+  contentShift: {
+    transition: theme.transitions.create("margin", {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen
+    }),
+    marginLeft: 0
   }
 }));
 
-export default function ResponsiveDrawer(props) {
-  const dispatch = useDispatch();
-
-  const { container } = props;
+export default function PersistentDrawerLeft() {
   const classes = useStyles();
   const theme = useTheme();
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [open, setOpen] = React.useState(false);
 
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
+  const handleDrawerOpen = () => {
+    setOpen(true);
   };
 
-  const users = firebase.database.collection;
-  console.log(users);
-
-  useEffect(() => {
-    console.log("ResponsiveDrawer clicked");
-  });
-
-  const drawer = (
-    <div>
-      <div className={classes.toolbar} />
-      <Divider />
-      <List>
-        <ListItem button={true} onClick={() => dispatch(getUser())}>
-          <ListItemIcon>
-            <InboxIcon />
-          </ListItemIcon>
-          <ListItemText primary="MyProfile" />
-        </ListItem>
-        <Divider />
-        <ListItem button={true}>
-          <ListItemIcon>
-            <MailIcon />
-          </ListItemIcon>
-          <ListItemText primary="Flights" />
-        </ListItem>
-        <Divider />
-        <ListItem button={true}>
-          <ListItemIcon>
-            <InboxIcon />
-          </ListItemIcon>
-          <ListItemText primary="Passengers" />
-        </ListItem>
-        <Divider />
-        <ListItem button={true}>
-          <ListItemIcon>
-            <MailIcon />
-          </ListItemIcon>
-          <ListItemText primary="Companies" />
-        </ListItem>
-      </List>
-      <Divider />
-    </div>
-  );
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
 
   return (
-    <div>
-      <div className={classes.root}>
-        <CssBaseline />
-        <nav className={classes.drawer} aria-label="mailbox folders">
-          <Hidden smUp implementation="css">
-            <Drawer
-              container={container}
-              variant="temporary"
-              anchor={theme.direction === "rtl" ? "right" : "left"}
-              open={mobileOpen}
-              onClose={handleDrawerToggle}
-              classes={{
-                paper: classes.drawerPaper
-              }}
-              ModalProps={{
-                keepMounted: true
-              }}
-            >
-              {drawer}
-            </Drawer>
-          </Hidden>
-          <Hidden xsDown implementation="css">
-            <Drawer
-              classes={{
-                paper: classes.drawerPaper
-              }}
-              variant="permanent"
-              open
-            >
-              {drawer}
-            </Drawer>
-          </Hidden>
-        </nav>
-        <main className={classes.content}></main>
-      </div>
+    <div className={classes.root}>
+      <CssBaseline />
+      <AppBar
+        position="fixed"
+        className={clsx(classes.appBar, {
+          [classes.appBarShift]: open
+        })}
+      >
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            className={clsx(classes.menuButton, open && classes.hide)}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" noWrap>
+            Persistent drawer
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Drawer
+        className={classes.drawer}
+        variant="persistent"
+        anchor="left"
+        open={open}
+        classes={{
+          paper: classes.drawerPaper
+        }}
+      >
+        <div className={classes.drawerHeader}>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === "ltr" ? (
+              <ChevronLeftIcon />
+            ) : (
+              <ChevronRightIcon />
+            )}
+          </IconButton>
+        </div>
+        <Divider />
+        <List>
+          <ListItem button>
+            <ListItemIcon>
+              <InboxIcon />
+            </ListItemIcon>
+            <ListItemText
+              primary="My Profile"
+              onClick={() => dispatch(getUser())}
+            />
+          </ListItem>
+          <ListItem button>
+            <ListItemIcon>
+              <MailIcon />
+            </ListItemIcon>
+            <ListItemText primary="Flights" />
+          </ListItem>
+          <ListItem button>
+            <ListItemIcon>
+              <InboxIcon />
+            </ListItemIcon>
+            <ListItemText primary="Passengers" />
+          </ListItem>
+          <ListItem button>
+            <ListItemIcon>
+              <MailIcon />
+            </ListItemIcon>
+            <ListItemText primary="Companies" />
+          </ListItem>
+        </List>
+        <Divider />
+      </Drawer>
     </div>
   );
 }

@@ -4,31 +4,28 @@ import * as actionCreators from "../action-creators/user";
 import rsf from "../saga-firebase";
 
 export function* getUser() {
-  const snapshot = yield call(rsf.firestore.getCollection, "users");
+  try {
+    const snapshot = yield call(rsf.firestore.getCollection, "users");
 
-  let users;
-  snapshot.forEach(user => {
-    users = {
-      ...users,
-      [user.id]: user.data()
-    };
-  });
-  console.log("users", users);
+    let users = [];
+    snapshot.forEach(user => {
+      users.push({ docId: user.id, ...user.data() });
+    });
+
+    console.log("users", users);
+    // yield put(actionCreators.getUserSuccess(users));
+  } catch (error) {
+    console.log("getUser error: ", error);
+  }
 }
 
-function* updateUser(action) {
-  let response = yield fetch(`https://${action.body.id}`, {
-    method: "PUT",
-    body: JSON.stringify(action.body.message),
-    headers: new Headers({
-      "content-type": "application/json",
-      "access-token": localStorage.getItem("access-token"),
-      client: localStorage.getItem("client"),
-      uid: localStorage.getItem("uid")
-    })
-  });
-  let data = yield response.json();
-  yield put(actionCreators.updateUserSuccess);
+function* updateUser(id, data) {
+  try {
+    yield call(rsf.firestore.updateDocument, `users/${id}`, ...data);
+  } catch (error) {
+    console.log("updateUser error: ", error);
+  }
+  // yield put(actionCreators.updateUserSuccess);
 }
 
 export default function* userSaga() {
