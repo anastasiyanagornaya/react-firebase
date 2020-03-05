@@ -1,6 +1,9 @@
 import { put, takeLatest } from "redux-saga/effects";
+import * as actions from "../actions/user";
+import * as actionCreators from "../action-creators/user";
 
-export default function* getUser() {
+export function* getUser() {
+  //?
   let response = yield fetch("https://", {
     method: "GET",
     headers: new Headers({
@@ -10,7 +13,7 @@ export default function* getUser() {
     })
   });
   let data = yield response.json();
-  yield put({ type: "GET_USER_SUCCESS", payload: data });
+  yield put(actionCreators.getUserSuccess);
 }
 
 function* updateUser(action) {
@@ -25,10 +28,10 @@ function* updateUser(action) {
     })
   });
   let data = yield response.json();
-  yield put({ type: "UPDATE_USER_SUCCESS" });
+  yield put(actionCreators.updateUserSuccess);
 }
 
 export default function* userSaga() {
-  yield takeLatest("GET_USER", getUser);
-  yield takeLatest("UPDATE_USER", updateUser);
+  yield takeLatest(actions.GET_USER, getUser);
+  yield takeLatest(actions.UPDATE_USER, updateUser);
 }

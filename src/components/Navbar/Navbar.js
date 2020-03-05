@@ -12,8 +12,8 @@ import MailIcon from "@material-ui/icons/Mail";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 //import { app } from "firebase";
 import firebase from "firebase";
-//import { store } from "../../store/configureStore";
 import { useDispatch } from "react-redux";
+import { getUser } from "../../store/action-creators/user";
 
 const drawerWidth = 240;
 
@@ -74,7 +74,7 @@ export default function ResponsiveDrawer(props) {
             <ListItem
               button
               key={text}
-              onClick={() => dispatch({ type: "FETCH_SHOW_USER" })}
+              onClick={text === "MyPrifile" ? dispatch(getUser()) : undefined}
             >
               <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
