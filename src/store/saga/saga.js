@@ -1,34 +1,19 @@
 import { put, takeLatest, call } from "redux-saga/effects";
 import * as actions from "../actions/user";
 import * as actionCreators from "../action-creators/user";
-import { db } from "../../App";
 import rsf from "../saga-firebase";
 
 export function* getUser() {
-  //?
-  // let response =   yield db.collection("users").get();
-  const snapshot = yield call(rsf.firestore.getCollection, 'users');
-  
+  const snapshot = yield call(rsf.firestore.getCollection, "users");
+
   let users;
   snapshot.forEach(user => {
-      users = {
-        ...users,
-        [user.id]: user.data()
-      }
+    users = {
+      ...users,
+      [user.id]: user.data()
+    };
   });
-  console.log('users', users)
-  // yield fetch("https://", {
-  //   method: "GET",
-  //   headers: new Headers({
-  //     "access-token": localStorage.getItem("access-token"),
-  //     client: localStorage.getItem("client"),
-  //     uid: localStorage.getItem("uid")
-  //   })
-  // });
-  // let data = yield response.json();
-  // yield put(actionCreators.getUserSuccess);
-
-  // .then(response => )
+  console.log("users", users);
 }
 
 function* updateUser(action) {

@@ -10,7 +10,6 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import MailIcon from "@material-ui/icons/Mail";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-//import { app } from "firebase";
 import firebase from "firebase";
 import { useDispatch } from "react-redux";
 import { getUser } from "../../store/action-creators/user";
@@ -65,8 +64,7 @@ export default function ResponsiveDrawer(props) {
   console.log(users);
 
   useEffect(() => {
-    // Обновляем заголовок документа с помощью API браузера
-    console.log('ResponsiveDrawer clicked')
+    console.log("ResponsiveDrawer clicked");
   });
 
   const drawer = (
@@ -74,22 +72,33 @@ export default function ResponsiveDrawer(props) {
       <div className={classes.toolbar} />
       <Divider />
       <List>
-        {["MyProfile", "Flights", "Passengers", "Companies"].map(
-          (text, index) => (
-            <ListItem
-              button={true}
-              key={text}
-              // onClick={ ? () => dispatch(getUser()) : undefined}
-              // onClick={text === "MyPrifile" ? () => console.log('clicked') : undefined}
-              onClick={() => dispatch(getUser())}
-            >
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          )
-        )}
+        <ListItem button={true} onClick={() => dispatch(getUser())}>
+          <ListItemIcon>
+            <InboxIcon />
+          </ListItemIcon>
+          <ListItemText primary="MyProfile" />
+        </ListItem>
+        <Divider />
+        <ListItem button={true}>
+          <ListItemIcon>
+            <MailIcon />
+          </ListItemIcon>
+          <ListItemText primary="Flights" />
+        </ListItem>
+        <Divider />
+        <ListItem button={true}>
+          <ListItemIcon>
+            <InboxIcon />
+          </ListItemIcon>
+          <ListItemText primary="Passengers" />
+        </ListItem>
+        <Divider />
+        <ListItem button={true}>
+          <ListItemIcon>
+            <MailIcon />
+          </ListItemIcon>
+          <ListItemText primary="Companies" />
+        </ListItem>
       </List>
       <Divider />
     </div>
