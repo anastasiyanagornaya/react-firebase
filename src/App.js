@@ -23,8 +23,8 @@ const providers = {
 };
 
 const App = props => {
-  console.log("prop", props);
   const { user, signOut, signInWithGoogle } = props;
+
   return (
     <Provider store={store}>
       <Header user={user} signOut={signOut} />

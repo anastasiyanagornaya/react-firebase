@@ -18,13 +18,13 @@ export function* getUser() {
   }
 }
 
-function* updateUser(id, data) {
+function* updateUser({ payload: { id, ...rest } }) {
   try {
-    yield call(rsf.firestore.updateDocument, `users/${id}`, ...data);
+    yield call(rsf.firestore.updateDocument, `users/${id}`, rest);
+    yield getUser();
   } catch (error) {
     console.log("updateUser error: ", error);
   }
-  // yield put(actionCreators.updateUserSuccess);
 }
 
 export default function* userSaga() {
