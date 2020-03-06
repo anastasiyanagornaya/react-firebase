@@ -5,30 +5,26 @@ import rsf from "../saga-firebase";
 
 export function* getUser() {
   try {
-    const snapshot = yield call(rsf.firestore.getCollection, 'users');
-  
+    const snapshot = yield call(rsf.firestore.getCollection, "users");
+
     let users = [];
     snapshot.forEach(user => {
-        users.push({docId: user.id, ...user.data()});
+      users.push({ docId: user.id, ...user.data() });
     });
-  
-  yield put(actionCreators.getUserSuccess(users));
-} catch (error) {
-    console.log('getUser error: ', error)
+
+    yield put(actionCreators.getUserSuccess(users));
+  } catch (error) {
+    console.log("getUser error: ", error);
   }
 }
 
-function* updateUser(id, data) {
+function* updateUser({ payload: { id, ...rest } }) {
   try {
-    yield call(
-      rsf.firestore.updateDocument,
-      `users/${id}`,
-      ...data,
-    );
+    yield call(rsf.firestore.updateDocument, `users/${id}`, rest);
+    yield getUser();
   } catch (error) {
-    console.log('updateUser error: ', error)
+    console.log("updateUser error: ", error);
   }
-  // yield put(actionCreators.updateUserSuccess);
 }
 
 export default function* userSaga() {

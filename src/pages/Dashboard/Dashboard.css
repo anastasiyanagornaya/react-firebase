@@ -1,15 +1,6 @@
 .dashboard {
   display: flex;
-  justify-content: center;
-}
-
-.dashboard-form {
-  display: flex;
   flex-direction: column;
   justify-content: center;
-  align-content: center;
-  background-color: lightgray;
-  padding: 20px;
-  min-width: 15%;
-  border-radius: 1.5%;
+  align-items: center;
 }
